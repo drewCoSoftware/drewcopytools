@@ -1,3 +1,5 @@
+# Copyright 2021 drewCo Software, All Rights Reserved
+
 from drewcopytools.filetools import get_sequential_file_path
 import logging
 from pathlib import Path
