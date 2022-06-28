@@ -1,5 +1,28 @@
 # General tool type functions.
 
+# -----------------------------------------------------------------------------
+# Simple function to get the correct name of a program, depending on the current platform.
+# this will pretty much add/remove the .exe extension of a program name as needed depending if
+# you are on window/linux, etc.
+def translate_exe_name(exeName:str):
+  from sys import platform
+
+  EXE_EXT = ".exe"
+  res = exeName
+  if platform == 'darwin':
+    if res.endswith(EXE_EXT):
+      l = len(res)
+      res = res[:l-len(EXE_EXT)]
+
+  elif platform == 'win32':
+    if not res.endswith(EXE_EXT):
+      res = res + EXE_EXT
+
+  else:
+    raise Exception(f"unknown/unsupported platform: '{platform}'!")
+  
+  return res
+
 
 # -----------------------------------------------------------------------------
 # This function is meant to take a command line as a single string, and split it
