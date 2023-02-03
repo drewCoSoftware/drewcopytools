@@ -6,7 +6,7 @@ from pathlib import Path
 
 # ----------------------------------------------------------------------------------------------------------------------------
 # REUSE
-def init_logging(logName:str = "./log.runlog"):
+def init_logging(logName:str = "./log.runlog", loggingLevel = logging.INFO):
 
     LOG_NAME = logName
     LOG_FORMAT = "%(asctime)s %(name)s:%(levelname)s:%(message)s"
@@ -24,8 +24,8 @@ def init_logging(logName:str = "./log.runlog"):
     # https://stackoverflow.com/questions/10706547/add-encoding-parameter-to-logging-basicconfig
     logging.basicConfig(handlers=[fileHandler, streamHandler],
                         format=LOG_FORMAT, 
-                        datefmt="%F %A %T", 
-                        level=logging.INFO)
+                        datefmt="%F %A %T",
+                        level=loggingLevel)
 
 
 # ----------------------------------------------------------------------------------------------------------------------------

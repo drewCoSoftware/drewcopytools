@@ -1,5 +1,6 @@
 # General tool type functions.
 import subprocess
+import logging
 
 # -----------------------------------------------------------------------------
 # Simple function to get the correct name of a program, depending on the current platform.
@@ -66,13 +67,13 @@ def split_cmdline_args(input:str):
 # Calls a subprocess from a string in a cross-platform way.
 # No more guessing what the right approach is.
 def subprocess_really(exe:str):
-  print(f'CALL:{exe}')
+  logging.debug(f'CALL:{exe}')
 
   if isinstance(exe, str):
     exe = split_cmdline_args(exe)
 
   callres = subprocess.call(exe)
   if callres != 0:
-    print("CALL FAILED!")
+    logging.info("CALL FAILED!")
     return False
   return True
