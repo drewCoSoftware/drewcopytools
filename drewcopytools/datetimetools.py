@@ -18,8 +18,10 @@ def get_utc_min():
     return res
 
 # ----------------------------------------------------------------------------------------------------------------------------
-def get_utc_time_from_string(timestamp: str):
-
+def get_utc_time_from_string(timestamp: str) -> datetime:
+    """
+    Parse a utc time from a string.
+    """
     parts = timestamp.split("+")
     offset = "00:00"
     tz = timezone.utc

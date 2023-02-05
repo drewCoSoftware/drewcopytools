@@ -1,10 +1,17 @@
 # Some utiltiy functions for helping us with file type things...
 from pathlib import Path
+from typing import Union
 
-
-def get_sequential_file_path(dir:Path, basename:str, extension:str) ->Path:
-    """Generates a sequential file name <basename>_<0, 1,2,3, etc.> in the given directory.
-    The directory will be created if it doesn't already exist."""
+def get_sequential_file_path(dir:Union[Path,str], basename:str, extension:str) ->Path:
+    """
+    Generates a sequential file name <basename>_<0, 1,2,3, etc.> in the given directory.
+    The directory will be created if it doesn't already exist.
+    """
+    if isinstance(dir, str):
+        dir = Path(dir)
+    if not isinstance(dir, Path):
+        raise Exception(f"'dir' must be str or Path!")
+        
     if not dir.exists():
         dir.mkdir()
 
