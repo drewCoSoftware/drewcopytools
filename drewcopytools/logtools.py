@@ -6,12 +6,18 @@ from pathlib import Path
 
 # ----------------------------------------------------------------------------------------------------------------------------
 # REUSE
-def init_logging(logName:str = "./log.runlog", loggingLevel = logging.INFO):
-
-    LOG_NAME = logName
+def init_logging(logPath_:str = "./log.runlog", level_ = logging.INFO, append:bool = True):
+    """
+    Initialize the logging system which will write to a file and to the console.
+    """
+    LOG_PATH = logPath_
     LOG_FORMAT = "%(asctime)s %(name)s:%(levelname)s:%(message)s"
 
-    fileHandler = logging.FileHandler(filename=LOG_NAME, encoding='utf-8', mode='a+')
+    useMode = 'w'
+    if append:
+        useMode = 'a'
+
+
 
     # also this:
     # https://pythonhowtoprogram.com/logging-in-python-3-how-to-output-logs-to-file-and-console/
@@ -20,12 +26,18 @@ def init_logging(logName:str = "./log.runlog", loggingLevel = logging.INFO):
     streamformat = logging.Formatter("%(message)s")
     streamHandler.setFormatter(streamformat)
 
+
+    useHandlers = [ streamHandler ]
+    if LOG_PATH is not None:
+        fileHandler = logging.FileHandler(filename=LOG_PATH, encoding='utf-8', mode=useMode)
+        useHandlers.append(fileHandler)
+
     # Thanks!  Since the docs give exmaples that dont work:
     # https://stackoverflow.com/questions/10706547/add-encoding-parameter-to-logging-basicconfig
-    logging.basicConfig(handlers=[fileHandler, streamHandler],
+    logging.basicConfig(handlers=useHandlers,
                         format=LOG_FORMAT, 
-                        datefmt="%F %A %T",
-                        level=loggingLevel)
+                        datefmt="%F %A %T",     # TODO: This format sux.  Do something about it later.  UTC+0 would be ideal.
+                        level=level_)
 
 
 # ----------------------------------------------------------------------------------------------------------------------------

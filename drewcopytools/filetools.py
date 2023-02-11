@@ -2,6 +2,16 @@
 from pathlib import Path
 from typing import Union
 
+# ---------------------------------------------------------------------------------------------------------
+def delete_file(path:Union[Path,str]):
+    """
+    Deletes the file at the given path, if it exists.
+    """
+    usePath = _toPath(path)
+    if usePath.exists():
+        usePath.unlink()
+        
+# ---------------------------------------------------------------------------------------------------------
 def get_sequential_file_path(dir:Union[Path,str], basename:str, extension:str) ->Path:
     """
     Generates a sequential file name <basename>_<0, 1,2,3, etc.> in the given directory.
@@ -43,3 +53,19 @@ def get_sequential_file_path(dir:Union[Path,str], basename:str, extension:str) -
     res =  dir / newName
     return res
 
+
+# ---------------------------------------------------------------------------------------------------------
+def _toPath(path:Union[str,Path]):
+    if isinstance(path, str):
+        res = Path(path)
+        return res
+    else:
+        return path
+
+# ---------------------------------------------------------------------------------------------------------
+def _toStr(path:Union[str,Path]):
+    if isinstance(path, Path):
+        res = str(path)
+        return res
+    else:
+        return res
