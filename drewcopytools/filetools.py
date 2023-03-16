@@ -3,6 +3,21 @@ from pathlib import Path
 from typing import Union
 
 # ---------------------------------------------------------------------------------------------------------
+def read_utf8_file(path:Union[Path,str]) -> str:
+    """
+    Reads content from a file at the given path.
+    This function assumes that the data is encoded as UTF-8 and will handle any issues with byte-order-marks
+    as needed.
+    """
+    path = _toStr(path)
+
+    # According to: https://stackoverflow.com/questions/13590749/reading-unicode-file-data-with-bom-chars-in-python
+    # utf-8-sig will handle the BOM automatically, and doesn't necessarily expect it.
+    with open(path, 'r', encoding='utf-8-sig') as rHandle:
+        data = rHandle.read()
+        return data
+
+# ---------------------------------------------------------------------------------------------------------
 def delete_file(path:Union[Path,str]):
     """
     Deletes the file at the given path, if it exists.
@@ -68,4 +83,4 @@ def _toStr(path:Union[str,Path]):
         res = str(path)
         return res
     else:
-        return res
+        return path
