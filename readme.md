@@ -13,3 +13,6 @@ Helps with dealing with datetimes, especially UTC.
 ## logtools
 Simplifies many logging tasks.    
 <strike>Uses drewCo standard logging formats and conventions, including contexts.</strike>
+
+## jsontools
+Helpful functions to make dealing with json less of a pain.
