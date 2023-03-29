@@ -1,6 +1,7 @@
 # General tool type functions.
 import subprocess
 import logging
+import logging
 
 # -----------------------------------------------------------------------------
 # Simple function to get the correct name of a program, depending on the current platform.
