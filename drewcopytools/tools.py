@@ -1,6 +1,7 @@
 # General tool type functions.
 import subprocess
 import logging
+import logging
 
 # -----------------------------------------------------------------------------
 # Simple function to get the correct name of a program, depending on the current platform.
@@ -74,6 +75,6 @@ def subprocess_really(exe:str):
 
   callres = subprocess.call(exe)
   if callres != 0:
-    logging.info("CALL FAILED!")
+    logging.debug("CALL FAILED!")
     return False
   return True
