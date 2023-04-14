@@ -11,7 +11,7 @@ def translate_exe_name(exeName:str):
 
   EXE_EXT = ".exe"
   res = exeName
-  if platform == 'darwin':
+  if platform == 'darwin' or platform == 'linux':
     if res.endswith(EXE_EXT):
       l = len(res)
       res = res[:l-len(EXE_EXT)]
