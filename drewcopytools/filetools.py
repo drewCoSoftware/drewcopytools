@@ -84,3 +84,42 @@ def _toStr(path:Union[str,Path]):
         return res
     else:
         return path
+    
+
+# ----------------------------------------------------------------------------------------------------------
+def file_exists(path) -> bool:
+    p  = Path(path)
+    res = p.exists() and p.is_file()
+    return res
+
+# ----------------------------------------------------------------------------------------------------------
+def directory_exists(path) -> bool:
+    p  = Path(path)
+    res = p.exists() and p.is_dir()
+    return res
+
+# ----------------------------------------------------------------------------------------------------------
+def write_all_lines(path, lines, newLineChar="\n"):
+  """
+  This function solves the problem where the authors of python decided that 'writelines'
+  shouldn't actually write lines, but instead blast the raw text to the file.
+  Sadly this kind of jank is just par for the course when it comes to python.
+  """
+  path.writelines(line + newLineChar for line in lines)
+
+# ----------------------------------------------------------------------------------------------------------
+def read_all_lines(filename):
+    """Read all lines from the given file.  Default separator is '\n'"""
+    try:
+        with open(filename, 'r') as file:
+            # Read all lines from the file and strip any leading/trailing whitespace
+            lines = [line.strip() for line in file.readlines()]
+        return lines
+    except FileNotFoundError:
+        print(f"The file '{filename}' was not found.")
+        return []
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return []
+
+

@@ -78,3 +78,12 @@ def subprocess_really(exe:str):
     logging.debug("CALL FAILED!")
     return False
   return True
+
+# ----------------------------------------------------------------------------------------------------------
+def translate_url_to_filename(url):
+    """ Translates a URL to a safe file name. """    
+    import re
+    res = re.sub(r'http(s)?://', '', url)
+    res = res.replace('/', '_')
+    res = res.replace('?', 'qs_')
+    return res
