@@ -1,6 +1,7 @@
 [tool.poetry]
 name = "drewcopytools"
 version = "0.3.5"
+=======
 description = "Utility code that I use in many of my python projects.  Most of these functions exist to make python work in a predicatble, cross-platform way."
 authors = ["Andrew Ritz <andrew.a.ritz@gmail.com>"]
 
