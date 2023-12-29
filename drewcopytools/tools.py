@@ -65,16 +65,29 @@ def split_cmdline_args(input:str):
   return res
 
 # ------------------------------------------------------------------------------------------------------------------------
-# Calls a subprocess from a string in a cross-platform way.
-# No more guessing what the right approach is.
-def subprocess_really(exe:str):
-  logging.debug(f'CALL:{exe}')
+# TODO: Add a way to get the output of the call piped to some logs or whatever....
+def subprocess_really(exe:str, useShell:bool=False, successCode:int = 0):
+  """
+  Calls a subprocess from a string in a cross-platform way.
+  No more guessing what the right approach is for your particular OS.
+  Returns a boolean indicating if the process return code indicates success.
+
+  Arguments:
+  exe -- String that includes the command you wish to run, and all arguments.
+  useShell -- Use the system shell when calling the subprocess.
+  successCode -- Return code from the process that indicates success.
+
+  Notes:
+  Internally this function uses subprocess.call
+  """
+  # NOTE: This needs to go into proper logging..... (verbose?)
+  print(f'CALL:{exe}')
 
   if isinstance(exe, str):
     exe = split_cmdline_args(exe)
 
-  callres = subprocess.call(exe)
-  if callres != 0:
-    logging.debug("CALL FAILED!")
+  callres = subprocess.call(exe, shell=useShell)
+  if callres != successCode:
+    print("CALL FAILED!")
     return False
   return True
