@@ -1,6 +1,25 @@
 # Some utiltiy functions for helping us with file type things...
 from pathlib import Path
+import shutil
 from typing import Union
+from dirSync import sync
+
+# ---------------------------------------------------------------------------------------------------------
+def _toPath(path:Union[str,Path]):
+    if isinstance(path, str):
+        res = Path(path)
+        return res
+    else:
+        return path
+
+# ---------------------------------------------------------------------------------------------------------
+def _toStr(path:Union[str,Path]):
+    if isinstance(path, Path):
+        res = str(path)
+        return res
+    else:
+        return path
+
 
 # ---------------------------------------------------------------------------------------------------------
 def read_utf8_file(path:Union[Path,str]) -> str:
@@ -17,6 +36,48 @@ def read_utf8_file(path:Union[Path,str]) -> str:
         data = rHandle.read()
         return data
 
+
+# ---------------------------------------------------------------------------------------------------------
+def sync_dirs(fromPath:Union[Path,str], toPath:Union[Path,str]):
+    """
+    Sync the content of two directories.
+    """
+    useFrom = _toPath(fromPath)
+    if not useFrom.is_dir():
+        raise Exception(f"Object at path: {str(useFrom)} is not a directory.")
+
+    useTo = _toPath(toPath)
+    if not useTo.is_dir():
+        raise Exception(f"Object at path: {str(useTo)} is not a directory.")
+
+    sync(useFrom, useTo)
+
+# ---------------------------------------------------------------------------------------------------------
+def delete_file_or_directory(path:Union[Path,str]):
+    """
+    Deletes the file or directory at the given path, if it exists.
+    """
+    usePath = _toPath(path)
+    if usePath.exists():
+        if (usePath.is_dir()):
+            delete_directory(path)
+        elif (usePath.is_file()):
+            delete_file(path)
+        else:
+            raise Exception(f"The object at path: {str(path)} is not a file or directory!")
+        
+# ---------------------------------------------------------------------------------------------------------
+def delete_directory(path:Union[Path,str]):
+    """
+    Deletes the directory at the given path, if it exists.
+    """
+    usePath = _toPath(path)
+    if usePath.exists():
+        if not usePath.is_dir():
+            raise Exception(f"The object at path: {str(usePath)} is not a directory!")
+
+        shutil.rmtree(str(usePath))
+
 # ---------------------------------------------------------------------------------------------------------
 def delete_file(path:Union[Path,str]):
     """
@@ -24,6 +85,8 @@ def delete_file(path:Union[Path,str]):
     """
     usePath = _toPath(path)
     if usePath.exists():
+        if not usePath.is_file():
+            raise Exception(f"The object at path: {str(usePath)} is not a file!")
         usePath.unlink()
         
 # ---------------------------------------------------------------------------------------------------------
