@@ -2,7 +2,7 @@
 from pathlib import Path
 import shutil
 from typing import Union
-from dirSync import sync
+from dirsync import sync
 
 # ---------------------------------------------------------------------------------------------------------
 def _toPath(path:Union[str,Path]):
